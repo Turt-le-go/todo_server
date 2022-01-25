@@ -7,7 +7,9 @@ import (
 
 type Task struct {
 	title string
-	deadline int
+	description string
+	createdAt int64
+	deadline int64
 }
 
 type Server struct {
@@ -21,7 +23,9 @@ func (s *Server) ListTasks(ctx context.Context, in *Empty) (*TasksListMessage, e
 		tasksListMessage.List = append(tasksListMessage.List,
 			&TaskMessage{
 				Title:  task.title,
-				Deadline: int32(task.deadline),
+				Description: task.description,
+				CreatedAt: task.createdAt,
+				Deadline: task.deadline,
 			},
 		)
 	}
@@ -31,7 +35,9 @@ func (s *Server) ListTasks(ctx context.Context, in *Empty) (*TasksListMessage, e
 func (s *Server) AddTask(ctx context.Context, in *TaskMessage) (*ReplyMessage, error) {
 	s.tasks = append(s.tasks, &Task{
 		title: in.Title,
-		deadline: int(in.Deadline),
+		description: in.Description,
+		createdAt: in.CreatedAt,
+		deadline: in.Deadline,
 	})
 	log.Println("Task added.")
 	return &ReplyMessage{Text: "OK."}, nil
