@@ -5,8 +5,10 @@ import (
 	"log"
 	"net"
 
-	"todo_server/src/utils"
+	"todo_server/src/db"
 	"todo_server/src/todo"
+	"todo_server/src/utils"
+
 	"google.golang.org/grpc"
 )
 
@@ -21,7 +23,11 @@ func main(){
 	lis, err := net.Listen(connType, fmt.Sprintf(":%d", connPort))
 	utils.Check(err)
 
-	s := todo.Server{}
+	s := todo.Server{
+		DBConn: db.Connection{
+			DbName: "db/todo.db",
+		},
+	}
 
 	grpcServer := grpc.NewServer()
 

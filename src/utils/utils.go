@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"log"
+	//"log"
 )
 
 func Check(err error){
 	if err != nil {
-		log.Fatalln(err)
+		//log.Fatalln(err)
+		panic(err)
 	}
 }
